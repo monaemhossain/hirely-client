@@ -9,8 +9,8 @@ const ProfileDropDown = (props) => {
   const { user, logOut } = useContext(AuthContext)
   const [state, setState] = useState(false)
   const profileRef = useRef()
+  const userPhoto = user?.photoURL;
 
-  
   const handleLogOut = () =>{
     logOut();
   }
@@ -25,14 +25,14 @@ const ProfileDropDown = (props) => {
 
   return (
     <div className={`relative ${props.class}`}>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center justify-center space-x-4">
         {
           user ? <>
             <button ref={profileRef} className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
               onClick={() => setState(!state)}
             >
               <img
-                src="https://randomuser.me/api/portraits/men/46.jpg"
+                src={`${userPhoto?userPhoto:'/user.png'}`}
                 className="w-full h-full rounded-full"
               />
             </button>
@@ -41,14 +41,16 @@ const ProfileDropDown = (props) => {
               <span className="block text-sm text-gray-500">john@gmail.com</span>
             </div>
           </> :
-            <NavLink to='/login' className='px-4 w-20'>Log in</NavLink>
+            <NavLink to='/login' className='px-4 w-20 text-center text-theme-color-1'>Log in</NavLink>
         }
 
       </div>
-      <ul className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'} flex flex-row`}>
-        <NavLink to='/profile'>Profile</NavLink>
-        <button onClick={handleLogOut}>Log out</button>
-      </ul>
+        {
+          user?<ul className={`bg-white top-14 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-48 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'} flex flex-col text-center`}>
+          <NavLink to='/profile' className="p-2 border-b hover:bg-theme-color-2 hover:bg-opacity-25 transition-all">Profile</NavLink>
+          <button onClick={handleLogOut} className="p-2 border-b hover:bg-theme-color-2 hover:bg-opacity-25 transition-all">Log out</button>
+        </ul>:''
+        }
     </div>
   )
 }
@@ -68,14 +70,14 @@ const AppMenu = () => {
   ]
   return (
     <div>
-      <nav className="border-b">
+      <nav className="border-b font-medium">
         <div className="flex items-center space-x-8 py-3 px-4 w-full mx-auto md:px-8">
           <div className="flex-none lg:flex-initial">
             <Logo />
           </div>
           <div className="flex-1 flex items-center justify-between">
             <div className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${menuState ? '' : 'hidden'}`}>
-              <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0 items-center">
+              <ul className="mt-12 space-y-5 flex flex-col lg:flex-row lg:space-x-6 lg:space-y-0 lg:mt-0 items-center ">
                 {
                   navigation.map((item, idx) => (
                     <NavLink to={item.path} key={idx} className={({ isActive, isPending }) =>

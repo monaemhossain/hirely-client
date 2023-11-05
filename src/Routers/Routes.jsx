@@ -9,6 +9,7 @@ import MyJobs from "../Pages/MyJobs/MyJobs";
 import AppliedJobs from "../Pages/AppliedJobs/AppliedJobs";
 import AllJobs from "../Pages/AllJobs/AllJobs";
 import Blogs from "../Pages/Blogs/Blogs";
+import Profile from "../Pages/Profile/Profile";
 
 const Routes  = createBrowserRouter([
     {
@@ -27,6 +28,12 @@ const Routes  = createBrowserRouter([
         {
           path: '/login',
           element: <LogIn />
+        },
+        {
+          path: '/profile',
+          element: <PrivateRoutes>
+            <Profile />
+          </PrivateRoutes>
         },
         {
           path: '/all-jobs',

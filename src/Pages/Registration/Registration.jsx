@@ -3,7 +3,6 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Logo from "../../Components/logo/logo";
 import { updateProfile } from "firebase/auth";
 import { NavLink } from "react-router-dom";
-import Swal from "sweetalert2";
 import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
