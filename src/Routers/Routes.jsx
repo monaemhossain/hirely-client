@@ -10,53 +10,58 @@ import AppliedJobs from "../Pages/AppliedJobs/AppliedJobs";
 import AllJobs from "../Pages/AllJobs/AllJobs";
 import Blogs from "../Pages/Blogs/Blogs";
 import Profile from "../Pages/Profile/Profile";
+import LoggedInRoutes from "./PrivateRoutes/LoggedInRoutes";
 
-const Routes  = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout/>,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-            path: '/',
-            element: <Home />
-        },
-        {
-           path: '/registration',
-           element: <Registration /> 
-        },
-        {
-          path: '/login',
-          element: <LogIn />
-        },
-        {
-          path: '/profile',
-          element: <PrivateRoutes>
-            <Profile />
-          </PrivateRoutes>
-        },
-        {
-          path: '/all-jobs',
-          element: <AllJobs />
-        },
-        {
-          path: '/blogs',
-          element: <Blogs />
-        },
-        {
-          path: '/my-jobs',
-          element: <PrivateRoutes>
-            <MyJobs />
-          </PrivateRoutes>
-        },
-        {
-          path: 'applied-jobs',
-          element: <PrivateRoutes>
-            <AppliedJobs />
-          </PrivateRoutes>
-        }
-      ]
-    },
-  ]);
+const Routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/',
+        element: <Home />
+      },
+      {
+        path: '/registration',
+        element: <LoggedInRoutes>
+          <Registration />
+        </LoggedInRoutes>
+      },
+      {
+        path: '/login',
+        element: <LoggedInRoutes>
+          <LogIn />
+        </LoggedInRoutes>
+      },
+      {
+        path: '/profile',
+        element: <PrivateRoutes>
+          <Profile />
+        </PrivateRoutes>
+      },
+      {
+        path: '/all-jobs',
+        element: <AllJobs />
+      },
+      {
+        path: '/blogs',
+        element: <Blogs />
+      },
+      {
+        path: '/my-jobs',
+        element: <PrivateRoutes>
+          <MyJobs />
+        </PrivateRoutes>
+      },
+      {
+        path: 'applied-jobs',
+        element: <PrivateRoutes>
+          <AppliedJobs />
+        </PrivateRoutes>
+      }
+    ]
+  },
+]);
 
 export default Routes;

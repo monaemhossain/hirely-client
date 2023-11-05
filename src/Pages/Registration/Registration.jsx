@@ -72,14 +72,14 @@ const Registration = () => {
 
 
     return (
-        <main className="w-full h-full py-16 flex flex-col items-center justify-center bg-gray-50 sm:px-4">
+        <main className="w-full h-full py-10 flex flex-col items-center justify-center bg-gray-50 sm:px-4">
 
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
                 <div className="text-center">
                     <Logo />
                     <div className="mt-5 space-y-2">
                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Create an account</h3>
-                        <p className="text-center">Already have an account? <NavLink to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">Login Here</NavLink></p>
+                        <p className="text-center">Already have an account? <NavLink to="/login" className="font-medium text-theme-color-4 hover:text-theme-color-1">Login Here</NavLink></p>
                     </div>
                 </div>
                 <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
@@ -96,7 +96,7 @@ const Registration = () => {
                                 id="name"
                                 type="text"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
                             />
                         </div>
                         <div>
@@ -107,7 +107,7 @@ const Registration = () => {
                                 id="email"
                                 type="email"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
                             />
                         </div>
                         <div>
@@ -118,7 +118,7 @@ const Registration = () => {
                                 id="password"
                                 type="password"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
                             />
                         </div>
                         <div>
@@ -129,12 +129,12 @@ const Registration = () => {
                                 id="photo"
                                 type="text"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
                             />
                         </div>
                         <button
                             type="submit"
-                            className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
+                            className="w-full px-4 py-2 text-white font-medium bg-theme-color-4 hover:bg-theme-color-1 active:bg-theme-color-4 rounded-lg duration-150"
                         >
                             Create account
                         </button>
