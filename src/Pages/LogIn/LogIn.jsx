@@ -1,19 +1,37 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../Components/logo/logo";
 import { useContext } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
-    const {logInWithGoogle} = useContext(AuthContext)
+    const { logIn, logInWithGoogle } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleLogInUser = e => {
+        e.preventDefault()
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+
+        logIn(email, password)
+            .then(() => {
+                toast.success("Login success")
+                navigate(location?.state ? location.state : '/');
+            })
+            .catch(() => toast.error("Invalid email or password"))
+    }
+
+
     const handleGoogleLogIn = () => {
         logInWithGoogle()
-        .then(() => {
-            toast.success('Logged in Successfully!')
-        })
-        .catch(() => {
-            toast.error('Something went wrong')
-        })
+            .then(() => {
+                toast.success('Logged in Successfully!')
+                navigate(location?.state ? location.state : '/');
+            })
+            .catch(() => {
+                toast.error('Something went wrong')
+            })
     }
     return (
         <main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -25,24 +43,26 @@ const LogIn = () => {
                     </div>
                 </div>
                 <form
-                    onSubmit={(e) => e.preventDefault()}
+                    onSubmit={handleLogInUser}
                     className="space-y-5"
                 >
                     <div>
-                        <label className="font-medium">
+                        <label className="font-medium" htmlFor="email">
                             Email
                         </label>
                         <input
+                            id="email"
                             type="email"
                             required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
                         />
                     </div>
                     <div>
-                        <label className="font-medium">
+                        <label className="font-medium" htmlFor="password">
                             Password
                         </label>
                         <input
+                            id="password"
                             type="password"
                             required
                             className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
@@ -61,6 +81,7 @@ const LogIn = () => {
                         <a href="#" className="text-center text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                     </div>
                     <button
+                        type="submit"
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
                     >
                         Sign in

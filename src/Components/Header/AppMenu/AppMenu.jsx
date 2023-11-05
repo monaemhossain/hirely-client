@@ -9,7 +9,20 @@ const ProfileDropDown = (props) => {
   const { user, logOut } = useContext(AuthContext)
   const [state, setState] = useState(false)
   const profileRef = useRef()
+
   const userPhoto = user?.photoURL;
+
+  const isValidUrl = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+  const validateUser = isValidUrl(userPhoto)
+
+
 
   const handleLogOut = () =>{
     logOut();
@@ -32,7 +45,7 @@ const ProfileDropDown = (props) => {
               onClick={() => setState(!state)}
             >
               <img
-                src={`${userPhoto?userPhoto:'/user.png'}`}
+                src={`${validateUser?userPhoto:'/user.png'}`}
                 className="w-full h-full rounded-full"
               />
             </button>
