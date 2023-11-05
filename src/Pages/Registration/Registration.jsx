@@ -4,11 +4,12 @@ import Logo from "../../Components/logo/logo";
 import { updateProfile } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 
 const Registration = () => {
 
-    const { userRegistration } = useContext(AuthContext);
-    const [success, setSuccess] = useState('')
+    const { userRegistration, logInWithGoogle } = useContext(AuthContext);
+    const [successMsg, setSuccessMsg] = useState('')
     const [errorMsg, setErrorMsg] = useState('')
 
     const handleRegistration = (e) => {
@@ -17,20 +18,21 @@ const Registration = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         const photo = e.target.photo.value;
-        console.log(email);
-        setSuccess('')
-        setErrorMsg('')
+
 
         if (password.length < 6) {
             setErrorMsg("Password should be at least 6 characters")
+            toast.error(errorMsg)
             return;
         }
         else if (!/[A-Z]/.test(password)) {
             setErrorMsg("Password must have at least one uppercase letter");
+            toast.error(errorMsg)
             return;
         }
         else if (!/[a-z]/.test(password)) {
             setErrorMsg("Password must have at least one lowercase letter");
+            toast.error(errorMsg)
             return;
         }
 
@@ -40,36 +42,38 @@ const Registration = () => {
                     displayName: name,
                     photoURL: photo,
                 })
-                setSuccess(`Hello ${name}, Your account is created successfully`);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success',
-                    text: success,
-            })
+                setSuccessMsg(`Hello ${name}, Your account is created successfully`);
+                toast.success(successMsg)
             })
             .catch((error) => {
                 if (error.code == "auth/email-already-in-use") {
-                    setErrorMsg("Your have already have account")
+                    setErrorMsg("Your already have account")
+                    toast.error(errorMsg)
                 } else if (error.code == "auth/invalid-email") {
                     setErrorMsg("invalid email address")
+                    toast.error(errorMsg)
                 }
                 else {
                     setErrorMsg("Something went wrong! Please contact with support team.")
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: errorMsg,
-                    })
+                    toast.error(errorMsg)
                 }
             })
-            
-    };
 
+    };
+    const handleGoogleLogIn = () => {
+        logInWithGoogle()
+            .then(() => {
+                toast.success('Logged in Successfully!')
+            })
+            .catch(() => {
+                toast.error('Something went wrong')
+            })
+    }
 
 
 
     return (
-        <main className="w-full h-screen flex flex-col items-center justify-center bg-gray-50 sm:px-4">
+        <main className="w-full h-full py-16 flex flex-col items-center justify-center bg-gray-50 sm:px-4">
 
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
                 <div className="text-center">
@@ -138,7 +142,7 @@ const Registration = () => {
                     </form>
                     <div className="divider">OR</div>
                     <div className="mt-5">
-                        <button className="w-full flex items-center justify-center gap-x-3 py-2.5 mt-5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
+                        <button onClick={handleGoogleLogIn} className="w-full flex items-center justify-center gap-x-3 py-2.5 mt-5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
                             <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clipPath="url(#clip0_17_40)">
                                     <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
@@ -154,10 +158,11 @@ const Registration = () => {
                             </svg>
                             Continue with Google
                         </button>
-                        
+
                     </div>
                 </div>
             </div>
+            <Toaster />
         </main>
     )
 

@@ -4,9 +4,9 @@ import Footer from "../Components/Footer/Footer";
 
 const MainLayout = () => {
     return (
-        <div>
+        <div className="bg-theme-color-3 bg-opacity-5">
             <AppMenu />
-            <div className="min-h-[calc(100vh-442px)] bg-blue-gray-50">
+            <div className="min-h-[calc(100vh-442px)] ">
                 <Outlet />
             </div>
             <Footer />

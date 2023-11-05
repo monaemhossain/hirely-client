@@ -1,7 +1,20 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../../Components/logo/logo";
+import { useContext } from "react";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
+    const {logInWithGoogle} = useContext(AuthContext)
+    const handleGoogleLogIn = () => {
+        logInWithGoogle()
+        .then(() => {
+            toast.success('Logged in Successfully!')
+        })
+        .catch(() => {
+            toast.error('Something went wrong')
+        })
+    }
     return (
         <main className="w-full h-screen flex flex-col items-center justify-center px-4">
             <div className="max-w-sm w-full text-gray-600 space-y-5">
@@ -45,7 +58,7 @@ const LogIn = () => {
                             </label>
                             <span>Remember me</span>
                         </div>
-                        <a href="javascript:void(0)" className="text-center text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                        <a href="#" className="text-center text-indigo-600 hover:text-indigo-500">Forgot password?</a>
                     </div>
                     <button
                         className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
@@ -53,7 +66,7 @@ const LogIn = () => {
                         Sign in
                     </button>
                 </form>
-                <button className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
+                <button onClick={handleGoogleLogIn} className="w-full flex items-center justify-center gap-x-3 py-2.5 border rounded-lg text-sm font-medium hover:bg-gray-50 duration-150 active:bg-gray-100">
                     <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clipPath="url(#clip0_17_40)">
                             <path d="M47.532 24.5528C47.532 22.9214 47.3997 21.2811 47.1175 19.6761H24.48V28.9181H37.4434C36.9055 31.8988 35.177 34.5356 32.6461 36.2111V42.2078H40.3801C44.9217 38.0278 47.532 31.8547 47.532 24.5528Z" fill="#4285F4" />
@@ -71,6 +84,7 @@ const LogIn = () => {
                 </button>
                 <p className="text-center">Don&#39;t have an account? <NavLink to="/registration" className="font-medium text-indigo-600 hover:text-indigo-500">Register Here</NavLink></p>
             </div>
+            <Toaster />
         </main>
     )
 }

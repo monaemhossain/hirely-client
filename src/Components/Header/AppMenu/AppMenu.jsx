@@ -68,7 +68,7 @@ const AppMenu = () => {
   ]
   return (
     <div>
-      <nav className="bg-white border-b">
+      <nav className="border-b">
         <div className="flex items-center space-x-8 py-3 px-4 w-full mx-auto md:px-8">
           <div className="flex-none lg:flex-initial">
             <Logo />
