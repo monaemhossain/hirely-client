@@ -6,7 +6,7 @@ const MainLayout = () => {
     return (
         <div>
             <AppMenu />
-            <div className="min-h-screen bg-blue-gray-50">
+            <div className="min-h-[calc(100vh-442px)] bg-blue-gray-50">
                 <Outlet />
             </div>
             <Footer />
