@@ -88,7 +88,7 @@ const Footer = () => {
                                 className="w-full p-2.5 outline-none"
                             />
                             <button
-                                className="p-2.5 rounded-md text-white bg-indigo-600 outline-none shadow-md focus:shadow-none sm:px-5"
+                                className="p-2.5 rounded-md text-white bg-theme-color-4 outline-none shadow-md focus:shadow-none sm:px-5"
                             >
                                 Subscribe
                             </button>

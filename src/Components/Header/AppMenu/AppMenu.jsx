@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useContext } from "react"
 import { NavLink } from "react-router-dom"
 import PropTypes from 'prop-types';
 import Logo from "../../logo/logo";
+import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 // Profile Dropdown
 const ProfileDropDown = (props) => {
@@ -16,26 +17,34 @@ const ProfileDropDown = (props) => {
 
   useEffect(() => {
     const handleDropDown = (e) => {
-      if (!profileRef.current.contains(e.target)) setState(false)
+      if (!profileRef?.current?.contains(e.target)) setState(false)
     }
     document.addEventListener('click', handleDropDown)
   }, [])
 
+  const { user } = useContext(AuthContext)
+
   return (
     <div className={`relative ${props.class}`}>
       <div className="flex items-center space-x-4">
-        <button ref={profileRef} className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
-          onClick={() => setState(!state)}
-        >
-          <img
-            src="https://randomuser.me/api/portraits/men/46.jpg"
-            className="w-full h-full rounded-full"
-          />
-        </button>
-        <div className="lg:hidden">
-          <span className="block">Micheal John</span>
-          <span className="block text-sm text-gray-500">john@gmail.com</span>
-        </div>
+        {
+          user ? <>
+            <button ref={profileRef} className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
+              onClick={() => setState(!state)}
+            >
+              <img
+                src="https://randomuser.me/api/portraits/men/46.jpg"
+                className="w-full h-full rounded-full"
+              />
+            </button>
+            <div className="lg:hidden">
+              <span className="block">Micheal John</span>
+              <span className="block text-sm text-gray-500">john@gmail.com</span>
+            </div>
+          </> :
+            <NavLink to='/login' className='px-4 w-20'>Log in</NavLink>
+        }
+
       </div>
       <ul className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'}`}>
         {
@@ -53,6 +62,8 @@ const ProfileDropDown = (props) => {
 }
 
 const AppMenu = () => {
+  // const {user} = useContext(AuthContext);
+  // console.log(user);
 
   const [menuState, setMenuState] = useState(false)
 
@@ -68,7 +79,7 @@ const AppMenu = () => {
   return (
     <div>
       <nav className="bg-white border-b">
-        <div className="flex items-center space-x-8 py-3 px-4 w-screen mx-auto md:px-8">
+        <div className="flex items-center space-x-8 py-3 px-4 w-full mx-auto md:px-8">
           <div className="flex-none lg:flex-initial">
             <Logo />
           </div>

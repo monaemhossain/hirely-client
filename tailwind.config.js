@@ -12,9 +12,13 @@ export default {
         'theme-color-3': '#def4c6',
         'theme-color-4': '#2cda9d',
         'theme-color-5': '#1b512d',
-        
+
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: false, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
+    darkTheme: "light",
+  }
 }
