@@ -6,14 +6,14 @@ import { AuthContext } from "../../../AuthProvider/AuthProvider";
 
 // Profile Dropdown
 const ProfileDropDown = (props) => {
+  const { user, logOut } = useContext(AuthContext)
   const [state, setState] = useState(false)
   const profileRef = useRef()
 
-  const navigation = [
-    { title: "Dashboard", path: "/dashboard" },
-    { title: "Log out", path: "/logout" },
-  ]
-
+  
+  const handleLogOut = () =>{
+    logOut();
+  }
 
   useEffect(() => {
     const handleDropDown = (e) => {
@@ -22,7 +22,6 @@ const ProfileDropDown = (props) => {
     document.addEventListener('click', handleDropDown)
   }, [])
 
-  const { user } = useContext(AuthContext)
 
   return (
     <div className={`relative ${props.class}`}>
@@ -46,24 +45,15 @@ const ProfileDropDown = (props) => {
         }
 
       </div>
-      <ul className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'}`}>
-        {
-          navigation.map((item, idx) => (
-            <li key={idx}>
-              <a className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5" href={item.path}>
-                {item.title}
-              </a>
-            </li>
-          ))
-        }
+      <ul className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'} flex flex-row`}>
+        <NavLink to='/profile'>Profile</NavLink>
+        <button onClick={handleLogOut}>Log out</button>
       </ul>
     </div>
   )
 }
 
 const AppMenu = () => {
-  // const {user} = useContext(AuthContext);
-  // console.log(user);
 
   const [menuState, setMenuState] = useState(false)
 

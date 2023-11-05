@@ -9,7 +9,7 @@ const Registration = () => {
 
     const { userRegistration } = useContext(AuthContext);
     const [success, setSuccess] = useState('')
-    const [error, setError] = useState('')
+    const [errorMsg, setErrorMsg] = useState('')
 
     const handleRegistration = (e) => {
         e.preventDefault();
@@ -19,18 +19,18 @@ const Registration = () => {
         const photo = e.target.photo.value;
         console.log(email);
         setSuccess('')
-        setError('')
+        setErrorMsg('')
 
         if (password.length < 6) {
-            setError("Password should be at least 6 characters")
+            setErrorMsg("Password should be at least 6 characters")
             return;
         }
         else if (!/[A-Z]/.test(password)) {
-            setError("Password must have at least one uppercase letter");
+            setErrorMsg("Password must have at least one uppercase letter");
             return;
         }
         else if (!/[a-z]/.test(password)) {
-            setError("Password must have at least one lowercase letter");
+            setErrorMsg("Password must have at least one lowercase letter");
             return;
         }
 
@@ -49,15 +49,20 @@ const Registration = () => {
             })
             .catch((error) => {
                 if (error.code == "auth/email-already-in-use") {
-                    setError("Your have already have account")
+                    setErrorMsg("Your have already have account")
                 } else if (error.code == "auth/invalid-email") {
-                    setError("invalid email address")
+                    setErrorMsg("invalid email address")
                 }
                 else {
-                    setError("Something went wrong! Please contact with support team.")
-                    console.log(error);
+                    setErrorMsg("Something went wrong! Please contact with support team.")
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: errorMsg,
+                    })
                 }
             })
+            
     };
 
 
