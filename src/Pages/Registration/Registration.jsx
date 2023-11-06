@@ -1,11 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import Logo from "../../Components/logo/logo";
 import { updateProfile } from "firebase/auth";
 import { NavLink } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "../../Components/Loader/Loader";
 
 const Registration = () => {
+    useEffect(() => {
+        document.title = 'Hirely | Registration';
+    }, []);
 
     const { userRegistration, logInWithGoogle } = useContext(AuthContext);
     const [successMsg, setSuccessMsg] = useState('')
@@ -73,7 +77,7 @@ const Registration = () => {
 
     return (
         <main className="w-full h-full py-10 flex flex-col items-center justify-center bg-gray-50 sm:px-4">
-
+            <Loader />
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
                 <div className="text-center">
                     <Logo />

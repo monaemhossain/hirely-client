@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import JobCard from "../../Components/Jobs/JobCard/JobCard";
+import Loader from "../../Components/Loader/Loader";
 
 const MyJobs = () => {
+    useEffect(() => {
+        document.title = 'Hirely | My Jobs';
+    }, []);
     const [myJobs, setMyJobs] = useState([])
     useEffect(() => {
         axios.get('http://localhost:5000/jobs')
@@ -22,6 +26,7 @@ const MyJobs = () => {
                     myJobs.map((item, idx) => (<JobCard key={idx} data={item}></JobCard>))
                 }
             </div>
+            <Loader />
         </div>
     );
 };

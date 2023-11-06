@@ -1,5 +1,10 @@
+import { useEffect } from "react";
 
 const Blogs = () => {
+    useEffect(() => {
+        document.title = 'Hirely | Blogs';
+    }, []);
+
     return (
         <div className="max-w-screen-lg mx-auto">
             <header className="bg-white p-4 text-center">

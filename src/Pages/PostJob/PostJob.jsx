@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,7 +6,9 @@ import './PostJob.css';
 import toast from "react-hot-toast";
 
 const PostJob = () => {
-
+    useEffect(() => {
+        document.title = 'Hirely | Post Job';
+    }, []);
     const { user } = useContext(AuthContext);
 
     // const [successMsg, setSuccessMsg] = useState('')

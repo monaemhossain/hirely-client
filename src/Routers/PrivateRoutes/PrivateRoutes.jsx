@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { PropTypes } from 'prop-types'
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import { Puff } from "react-loader-spinner";
 
 const PrivateRoutes = ({ children }) => {
     const { user, loader } = useContext(AuthContext)
@@ -11,7 +12,16 @@ const PrivateRoutes = ({ children }) => {
     if (loader) {
         return (
             <div className="w-full min-h-screen flex items-center justify-center">
-                <span className="loading loading-ring loading-lg"></span>
+                <Puff
+                    height="80"
+                    width="80"
+                    radius={1}
+                    color="#4fa94d"
+                    ariaLabel="puff-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                />
             </div>
         )
     }

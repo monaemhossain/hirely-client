@@ -1,10 +1,13 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../Components/logo/logo";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 
 const LogIn = () => {
+    useEffect(() => {
+        document.title = 'Hirely | Login';
+    }, []);
     const { logIn, logInWithGoogle } = useContext(AuthContext)
     const navigate = useNavigate();
     const location = useLocation();
