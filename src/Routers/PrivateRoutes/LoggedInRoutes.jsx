@@ -7,10 +7,10 @@ const LoggedInRoutes = ({ children }) => {
     const { user } = useContext(AuthContext)
 
     if (user) {
-        return children;
+        return <Navigate to="/"></Navigate>;
     }
 
-    return <Navigate to="/"></Navigate>
+    return children
 };
 
 export default LoggedInRoutes;

@@ -19,7 +19,18 @@ const LogIn = () => {
                 toast.success("Login success")
                 navigate(location?.state ? location.state : '/');
             })
-            .catch(() => toast.error("Invalid email or password"))
+            .catch((err) => {
+                console.log(err);
+                if(err.code == "auth/network-request-failed"){
+                    toast.error("Network Error. Check you internet connection")
+                    return;
+                }
+                if(err.code == "auth/invalid-login-credentials"){
+                    toast.error("Invalid login credentials try login with Google instead")
+                    return;
+                }
+                toast.error("Email and password does not match")
+            })
     }
 
 
@@ -29,8 +40,12 @@ const LogIn = () => {
                 toast.success('Logged in Successfully!')
                 navigate(location?.state ? location.state : '/');
             })
-            .catch(() => {
-                toast.error('Something went wrong')
+            .catch((err) => {
+                if(err.code == "auth/network-request-failed"){
+                    toast.error("Network Error. Check you internet connection")
+                    return;
+                }
+                toast.error('Something went wrong, Failed to login')
             })
     }
     return (

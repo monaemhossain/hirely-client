@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
-import Logo from "../../Components/logo/logo";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './PostJob.css';
@@ -25,8 +24,9 @@ const PostJob = () => {
         const jobDescription = e.target.jobDescription.value
         const priceRageMin = e.target.priceRageMin.value
         const priceRageMax = e.target.priceRageMax.value
+        const applicantsNumber = 0;
 
-        const jobData = { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax }
+        const jobData = { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax,applicantsNumber }
         console.log(jobData);
     }
 
