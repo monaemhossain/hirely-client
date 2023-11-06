@@ -3,6 +3,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './PostJob.css';
+import toast from "react-hot-toast";
 
 const PostJob = () => {
 
@@ -19,6 +20,7 @@ const PostJob = () => {
         const jobTitle = e.target.jobTitle.value
         const userName = e.target.userName.value
         const jobCategory = e.target.jobCategory.value
+        const jobType = e.target.jobType.value
         const postingDate = e.target.postingDate.value
         const deadLine = e.target.deadLine.value
         const jobDescription = e.target.jobDescription.value
@@ -26,8 +28,23 @@ const PostJob = () => {
         const priceRageMax = e.target.priceRageMax.value
         const applicantsNumber = 0;
 
-        const jobData = { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax,applicantsNumber }
+        const jobData = { bannerPhoto, jobTitle, userName, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
         console.log(jobData);
+        // send job data to server
+        fetch('http://localhost:5000/jobs', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(jobData)
+        })
+            .then(res => res.json())
+            .then(() => {
+                toast.success(`${jobTitle} Posted successfully`)
+            })
+        document.postJobForm.reset();
+
+
     }
 
 
@@ -37,7 +54,7 @@ const PostJob = () => {
 
             <div className="w-full space-y-6 text-gray-600 sm:max-w-md">
                 <div className="text-center">
-                    
+
                     <div className="mt-5 space-y-2">
                         <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Post your job</h3>
                     </div>
@@ -46,7 +63,7 @@ const PostJob = () => {
                     <form
                         onSubmit={handlePostJob}
                         className="space-y-5"
-
+                        name="postJobForm"
                     >
                         <div>
                             <label className="font-medium" htmlFor="bannerPhoto">
@@ -86,16 +103,31 @@ const PostJob = () => {
                             />
                         </div>
 
+                        <div className="md:grid grid-cols-2 gap-2.5 justify-center items-center">
+                            <div>
+                                <label className="font-medium " htmlFor="jobType">
+                                    Job type
+                                </label>
+                                <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40'>
+                                    <option value="0">Select Job Type</option>
+                                    <option>On Site</option>
+                                    <option >Remote</option>
+                                    <option>Part-Time</option>
+                                    <option>Hybrid</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="font-medium" htmlFor="jobCategory">
+                                    Job Category
+                                </label>
+                                <input
+                                    id="jobCategory"
+                                    type="text"
+                                    required
+                                    className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
 
-
-                        <div>
-                            <select id="jobCategory" className="select select-bordered w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" required>
-                                <option value="0">Select Job Category</option>
-                                <option>On Site</option>
-                                <option >Remote</option>
-                                <option>Part-Time</option>
-                                <option>Hybrid</option>
-                            </select>
+                                />
+                            </div>
                         </div>
 
                         <div>
