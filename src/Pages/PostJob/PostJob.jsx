@@ -9,8 +9,9 @@ const PostJob = () => {
     useEffect(() => {
         document.title = 'Hirely | Post Job';
     }, []);
-    const { user } = useContext(AuthContext);
 
+    const { user } = useContext(AuthContext);
+    
     // const [successMsg, setSuccessMsg] = useState('')
     // const [errorMsg, setErrorMsg] = useState('')
     const [postDate, setPostDate] = useState(new Date())
@@ -21,6 +22,7 @@ const PostJob = () => {
         const bannerPhoto = e.target.bannerPhoto.value
         const jobTitle = e.target.jobTitle.value
         const userName = e.target.userName.value
+        const userEmail = user.email;
         const jobCategory = e.target.jobCategory.value
         const jobType = e.target.jobType.value
         const postingDate = e.target.postingDate.value
@@ -30,7 +32,7 @@ const PostJob = () => {
         const priceRageMax = e.target.priceRageMax.value
         const applicantsNumber = 0;
 
-        const jobData = { bannerPhoto, jobTitle, userName, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
+        const jobData = { bannerPhoto, jobTitle, userName, userEmail, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
         console.log(jobData);
         // send job data to server
         fetch('http://localhost:5000/jobs', {

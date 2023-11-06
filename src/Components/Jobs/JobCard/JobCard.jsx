@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 const JobCard = ({ data }) => {
-    const { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
+    const { jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
     console.log(data);
     return (
         <section >
@@ -13,12 +13,15 @@ const JobCard = ({ data }) => {
                     <div>
                         <div className="justify-between sm:flex items-center">
                             <div className="flex-1">
-                                <p className='text-sm text-theme-color-1'>Posted by: {userName}</p>
+                                <div className='flex justify-between'>
+                                    <p className='text-sm text-theme-color-1'>Posted by: {userName}</p>
+
+                                </div>
                                 <h3 className="text-xl font-medium text-theme-color-5">
                                     {jobTitle}
                                 </h3>
                                 <p className="text-gray-500 mt-2 pr-2">
-                                    {jobDescription.slice(0,50)}...
+                                    {jobDescription.slice(0, 50)}...
                                 </p>
                             </div>
                             <div className="mt-5 space-y-4 text-sm sm:mt-0 sm:space-y-2">
@@ -29,7 +32,7 @@ const JobCard = ({ data }) => {
                                     {postingDate}
                                 </span>
                                 <span className='flex items-center text-gray-500 gap-1'>
-                                    <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/stopwatch.png" alt="stopwatch" className='inline'/>{deadLine}
+                                    <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/stopwatch.png" alt="stopwatch" className='inline' />{deadLine}
                                 </span>
                                 <span className="flex items-center text-gray-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
@@ -38,17 +41,20 @@ const JobCard = ({ data }) => {
                                     </svg>
                                     ${priceRageMin}-${priceRageMax} /hr
                                 </span>
-                                
+
                             </div>
                         </div>
                         <div className="mt-4 items-center space-y-4 text-sm sm:flex sm:justify-between sm:space-x-4 sm:space-y-0">
-                            <span className="flex items-center text-gray-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
-                                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
-                                </svg>
-                                {jobCategory}
-                            </span>
+                            <div className='grid gap-1'>
+                                <span className="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="#111111">
+                                        <path fillRule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clipRule="evenodd" />
+                                        <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                                    </svg>
+                                    {jobCategory}
+                                </span>
+                                <span className='flex gap-2'> <img width="20" height="20" src="https://img.icons8.com/windows/32/parse-resume.png" alt="parse-resume"/> Applicants: {applicantsNumber}</span>
+                            </div>
                             <button className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white">Job Details</button>
                         </div>
                     </div>
