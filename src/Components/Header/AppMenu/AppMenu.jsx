@@ -24,7 +24,7 @@ const ProfileDropDown = (props) => {
 
 
 
-  const handleLogOut = () =>{
+  const handleLogOut = () => {
     logOut();
   }
 
@@ -45,7 +45,7 @@ const ProfileDropDown = (props) => {
               onClick={() => setState(!state)}
             >
               <img
-                src={`${validateUser?userPhoto:'/user.png'}`}
+                src={`${validateUser ? userPhoto : '/user.png'}`}
                 className="w-full h-full rounded-full"
               />
             </button>
@@ -54,13 +54,13 @@ const ProfileDropDown = (props) => {
         }
 
       </div>
-        {
-          user?<ul className={`bg-white top-14 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-48 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'} flex flex-col text-center`}>
+      {
+        user ? <ul className={`bg-white top-14 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-48 lg:shadow-md lg:space-y-0 lg:mt-0 ${state ? '' : 'lg:hidden'} flex flex-col text-center`}>
           <p className="p-2 border-b capitalize cursor-default">Hello, {user.displayName}</p>
           <NavLink to='/profile' className="p-2 border-b hover:bg-theme-color-2 hover:bg-opacity-25 transition-all">Profile</NavLink>
           <button onClick={handleLogOut} className="p-2 border-b hover:bg-theme-color-2 hover:bg-opacity-25 transition-all">Log out</button>
-        </ul>:''
-        }
+        </ul> : ''
+      }
     </div>
   )
 }
@@ -81,17 +81,17 @@ const AppMenu = () => {
   return (
     <div>
       <nav className="border-b font-medium">
-        <div className="flex items-center space-x-8 py-3 px-4 w-full mx-auto md:px-8">
+        <div className="flex items-center py-3 px-4 w-full mx-auto md:px-8">
           <div className="flex-none lg:flex-initial">
             <Logo />
           </div>
           <div className="flex-1 flex items-center justify-between">
             <div className={`bg-white absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${menuState ? '' : 'hidden'}`}>
-              <ul className="mt-12 space-y-5 flex flex-col lg:flex-row lg:space-x-6 lg:space-y-0 lg:mt-0 items-center ">
+              <ul className="mt-12 space-y-5 flex flex-col lg:flex-row lg:space-x-1 lg:space-y-0 lg:mt-0 items-center ">
                 {
                   navigation.map((item, idx) => (
                     <NavLink to={item.path} key={idx} className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "bg-theme-color-3 text-theme-color-1 px-4 py-2 rounded-md" : "text-theme-color-1 hover:text-theme-color-5"
+                      isPending ? "pending" : isActive ? "text-theme-color-1 py-2 px-4 rounded-md border border-theme-color-1" : "border border-transparent hover:border-theme-color-2 py-2 px-4 text-theme-color-1 hover:text-white hover:bg-theme-color-2 transition-all rounded-md"
                     }
                     >
                       {item.title}
@@ -101,7 +101,7 @@ const AppMenu = () => {
                 {
                   privateNavigation.map((item, idx) => (
                     <NavLink to={item.path} key={idx} className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "bg-theme-color-3 text-theme-color-1 px-4 py-2 rounded-md" : "text-theme-color-1 hover:text-theme-color-5"
+                      isPending ? "pending" : isActive ? "text-theme-color-1 py-2 px-4 rounded-md border border-theme-color-1" : "border border-transparent hover:border-theme-color-2 py-2 px-4 text-theme-color-1 hover:text-white hover:bg-theme-color-2 transition-all rounded-md"
                     }
                     >
                       {item.title}
@@ -113,10 +113,15 @@ const AppMenu = () => {
                 class="mt-5 pt-5 border-t lg:hidden"
               />
             </div>
-            <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
-              <div>
+            <div className="flex-none flex items-center justify-end space-x-2 sm:space-x-6">
 
+              
+              <div>
+                <NavLink to="/post-job" className="border border-theme-color-1 py-3 px-4 text-theme-color-1 hover:text-white hover:bg-theme-color-2 transition-all rounded-md">Post a Job</NavLink>
               </div>
+
+
+
               <ProfileDropDown
                 class="hidden lg:block"
               />
@@ -136,6 +141,7 @@ const AppMenu = () => {
                   )
                 }
               </button>
+
             </div>
           </div>
         </div>
