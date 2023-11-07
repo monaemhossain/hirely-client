@@ -1,18 +1,59 @@
+import { useContext } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const JobDetails = () => {
     const data = useLoaderData();
-    console.log(data);
-    const { _id, bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, userEmail, jobType } = data
+    const {user} = useContext(AuthContext)
+    console.log(user);
+    const { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType } = data
+    const isValidUrl = (string) => {
+        try {
+            new URL(string);
+            return true;
+        } catch (err) {
+            return false;
+        }
+    }
+    const validateUser = isValidUrl(bannerPhoto)
 
-    const handleApplyJob = () => {
+    const handleSubmitApplication = (e) => {
+        e.preventDefault()
+        const userName = e.target.userName.value
+        const userEmail = e.target.userEmail.value
+        const userResume = e.target.resumeLink.value
+        try {
+            new URL(userResume);
+            const applicationDetails = { userName, userEmail, userResume, bannerPhoto, jobTitle, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType }
+            console.log(applicationDetails);
+
+            // send job data to server
+            fetch('http://localhost:5000/application', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(applicationDetails)
+            })
+                .then(res => res.json())
+                .then(() => {
+                    toast.success(`Your application successfully sent`)
+                })
+                .catch((err) => {
+                    toast.error(err)
+                })
+            } catch (err) {
+            toast.error('Your resume url is invalid')
+            console.log(err);
+        }
 
     }
     return (
         <section className="max-w-screen-xl mx-auto py-24">
 
             <div className="card lg:card-side bg-base-100 shadow-xl grid grid-cols-2">
-                <figure><img src={bannerPhoto} alt={`${jobTitle} banner image`} className="object-cover h-full"/></figure>
+                <figure><img src={`${validateUser ? bannerPhoto : 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg'}`} alt={`${jobTitle} banner image`} className="object-cover h-full" /></figure>
                 <div className="card-body">
                     <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Job posted by:</span> {userName}</p>
                     <div className="grid gap-2">
@@ -20,7 +61,7 @@ const JobDetails = () => {
                         <p className="flex gap-2"><span className="font-bold text-theme-color-4">Application deadline:</span> {deadLine}</p>
                     </div>
                     <div className="grid gap-2">
-                        <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Price range:</span> ${priceRageMin} - ${priceRageMax}</p>
+                        <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Price range:</span> ${priceRageMin} - ${priceRageMax} /hour</p>
                         <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Job Category:</span> {jobCategory}</p>
                         <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Job Type:</span> {jobType} job</p>
 
@@ -39,23 +80,25 @@ const JobDetails = () => {
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Hello!</h3>
                     <p className="py-4">Press ESC key or click the button below to close</p>
-                    <form onSubmit={handleApplyJob} className="grid gap-2">
+                    <form onSubmit={handleSubmitApplication} className="grid gap-2">
                         <label htmlFor="userName">Applicant name</label>
                         <input
                             id="userName"
-                            defaultValue={userName}
+                            defaultValue={user.displayName}
                             type="text"
                             placeholder="Enter your name"
                             className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-2 shadow-sm rounded-lg"
+                            required
                         />
-                        
+
                         <label htmlFor="userEmail">Applicant email</label>
                         <input
                             id="userEmail"
-                            defaultValue={userEmail}
+                            defaultValue={user.email}
                             type="text"
                             placeholder="Enter your email"
                             className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-2 shadow-sm rounded-lg"
+                            required
                             disabled
                         />
                         <label htmlFor="resumeLink">Applicant resume link</label>
@@ -64,20 +107,23 @@ const JobDetails = () => {
                             type="text"
                             placeholder="Your resume link address"
                             className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-2 shadow-sm rounded-lg"
+                            required
                         />
+                        <div className="modal-action grid grid-cols-2">
+                        <button type="submit" className="btn bg-theme-color-2 hover:bg-theme-color-1 hover:text-white">Submit Application</button>
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn w-full btn-error text-white hover:bg-red-500 transition-all">Close</button>
+                        </form>
+                    </div>
                     </form>
 
 
 
-                    <div className="modal-action">
-                        <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
-                            <button className="btn">Close</button>
-                        </form>
-                    </div>
+                    
                 </div>
+                <Toaster />
             </dialog>
-
         </section>
     );
 };

@@ -115,7 +115,7 @@ const PostJob = () => {
                                 <label className="font-medium " htmlFor="jobType">
                                     Job type
                                 </label>
-                                <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40'>
+                                <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40' required>
                                     <option value="0">Select Job Type</option>
                                     <option>On Site</option>
                                     <option >Remote</option>
@@ -169,7 +169,7 @@ const PostJob = () => {
                                 <label className="font-medium" htmlFor="deadLine">
                                     Deadline
                                 </label>
-                                <DatePicker id='deadLine' selected={startDate} onChange={(date) => setStartDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' />
+                                <DatePicker id='deadLine' selected={startDate} onChange={(date) => setStartDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' required/>
                             </div>
                         </div>
                         <div>
