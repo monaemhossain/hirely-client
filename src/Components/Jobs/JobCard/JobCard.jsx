@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 const JobCard = ({ data }) => {
     const { jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
-    console.log(data);
+    // console.log(data);
     return (
         <section >
 

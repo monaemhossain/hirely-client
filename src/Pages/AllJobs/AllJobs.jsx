@@ -6,7 +6,7 @@ import Loader from "../../Components/Loader/Loader";
 const AllJobs = () => {
     const [jobs, setJobs] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:5000/jobs')
+        axios.get('http://localhost:5000/job')
             .then(res => setJobs(res.data))
 
     }, [])

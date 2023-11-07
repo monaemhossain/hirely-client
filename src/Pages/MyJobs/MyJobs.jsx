@@ -1,19 +1,27 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import JobCard from "../../Components/Jobs/JobCard/JobCard";
 import Loader from "../../Components/Loader/Loader";
+import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const MyJobs = () => {
     useEffect(() => {
         document.title = 'Hirely | My Jobs';
     }, []);
-    const [myJobs, setMyJobs] = useState([])
+    const [jobs, setJobs] = useState([])
+    const {user} = useContext(AuthContext)
+    
     useEffect(() => {
-        axios.get('http://localhost:5000/jobs')
-            .then(res => setMyJobs(res.data))
-
+        axios.get('http://localhost:5000/job')
+        .then(res => setJobs(res.data))
     }, [])
-    console.log(myJobs);
+    
+    
+    const myJobs = jobs.filter(job => job.userEmail == user.email) 
+    // console.log(jobs);
+    // console.log(user.email);
+    // console.log(myJobs);
+
     return (
         <div className="my-14 max-w-screen-lg mx-auto px-4 md:px-8">
             <div className="my-8">

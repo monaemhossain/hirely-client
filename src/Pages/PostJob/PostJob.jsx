@@ -3,7 +3,7 @@ import { AuthContext } from "../../AuthProvider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './PostJob.css';
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const PostJob = () => {
     useEffect(() => {
@@ -35,7 +35,7 @@ const PostJob = () => {
         const jobData = { bannerPhoto, jobTitle, userName, userEmail, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
         console.log(jobData);
         // send job data to server
-        fetch('http://localhost:5000/jobs', {
+        fetch('http://localhost:5000/job', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -44,7 +44,10 @@ const PostJob = () => {
         })
             .then(res => res.json())
             .then(() => {
-                toast.success(`${jobTitle} Posted successfully`)
+                toast.success(`${jobTitle} Successfully Posted`)
+            })
+            .catch((err)=>{
+                toast.error(err)
             })
         document.postJobForm.reset();
 
@@ -191,6 +194,7 @@ const PostJob = () => {
 
                 </div>
             </div>
+            <Toaster/>
         </main>
     )
 
