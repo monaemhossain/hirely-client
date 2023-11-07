@@ -1,13 +1,22 @@
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 const JobCard = ({ data }) => {
     const { _id, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
     // console.log(data);
     const navigate = useNavigate()
-
+    const location = useLocation()
     const handleJobDetails = () => {
-        navigate(`/job-details/${_id}`, { state: { data } })
-    }
+        let type = 'job'
+        if(location.pathname=="/applied-jobs"){
+            type = 'application';
+            console.log(true);
+        }
+        const id = _id; 
+    
+        navigate(`/details/${type}/${id}`);
+        console.log(location);
+      }
+
     return (
         <section >
             <div>

@@ -69,12 +69,17 @@ const Routes = createBrowserRouter([
         </PrivateRoutes>
       },
       {
-        path: '/job-details/:id',
+        path: '/details/:type/:id',
         element: <PrivateRoutes>
           <JobDetails />
         </PrivateRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/job/${params.id}`)
+        loader: ({ params }) => {
+          const { type, id } = params;
+          const path = type === 'job' ? 'job' : 'application';
+          return fetch(`http://localhost:5000/${path}/${id}`);
+        }
       }
+
     ]
   },
 ]);
