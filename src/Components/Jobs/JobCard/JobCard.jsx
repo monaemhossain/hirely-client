@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 const JobCard = ({ data }) => {
-    const { jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
+    const { _id, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
     // console.log(data);
+    const navigate = useNavigate()
+
+    const handleJobDetails = () => {
+        navigate(`/job-details/${_id}`, { state: { data } })
+    }
     return (
         <section >
 
@@ -55,7 +61,7 @@ const JobCard = ({ data }) => {
                                 </span>
                                 <span className='flex gap-2'> <img width="20" height="20" src="https://img.icons8.com/windows/32/parse-resume.png" alt="parse-resume"/> Applicants: {applicantsNumber}</span>
                             </div>
-                            <button className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white">Job Details</button>
+                            <button onClick={handleJobDetails} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white">Job Details</button>
                         </div>
                     </div>
 
