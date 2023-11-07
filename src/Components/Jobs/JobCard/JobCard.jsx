@@ -10,11 +10,8 @@ const JobCard = ({ data }) => {
     }
     return (
         <section >
-
-
-            <ul>
-
-                <li className="p-5 bg-white rounded-md shadow-sm border">
+            <div>
+                <div className="p-5 bg-white rounded-md shadow-sm border">
 
                     <div>
                         <div className="justify-between sm:flex items-center">
@@ -65,9 +62,9 @@ const JobCard = ({ data }) => {
                         </div>
                     </div>
 
-                </li>
+                </div>
 
-            </ul>
+            </div>
         </section>
     )
 }
