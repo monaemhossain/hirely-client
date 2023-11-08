@@ -48,8 +48,15 @@ const JobDetails = () => {
             console.log(err);
         }
     }
+    // compare job dead line
+    let dateObj = new Date();
+    let year = dateObj.getFullYear();
+    let month = dateObj.getMonth() + 1;
+    let day = dateObj.getDate();
+    const today = year + "/" + month + "/" + day;
 
-
+    const jobDeadLine = deadLine.replace(/-/g, '/')
+// navigate to update job page
     const navigate = useNavigate()
     const handleUpdateJob = () => {
         navigate(`/update/${_id}`)
@@ -84,7 +91,7 @@ const JobDetails = () => {
                                     applicantEmail ? '' : user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
                                 }
                                 {
-                                    user.email == userEmail ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                                    user.email == userEmail || jobDeadLine < today ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
                                 }
                             </>
                         }
