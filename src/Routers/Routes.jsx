@@ -74,7 +74,7 @@ const Routes = createBrowserRouter([
         element: <PrivateRoutes>
           <UpdateJob />
         </PrivateRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/job/${params.id}`)
+        loader: ({params}) => fetch(`https://hirely-server.vercel.app/job/${params.id}`)
       },
       {
         path: '/details/:type/:id',
@@ -84,7 +84,7 @@ const Routes = createBrowserRouter([
         loader: ({ params }) => {
           const { type, id } = params;
           const path = type === 'job' ? 'job' : 'application';
-          return fetch(`http://localhost:5000/${path}/${id}`);
+          return fetch(`https://hirely-server.vercel.app/${path}/${id}`);
         }
       }
 

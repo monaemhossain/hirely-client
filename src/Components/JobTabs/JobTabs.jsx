@@ -28,12 +28,12 @@ const JobTabs = () => {
         },
     ]
     useEffect(() => {
-        axios.get(`http://localhost:5000/search/${tabCategory[0].category}`)
+        axios.get(`https://hirely-server.vercel.app/search/${tabCategory[0].category}`)
             .then(res => setAllJobs(res.data))
     }, [])
     const handleChangeTab = (category) => {
-        console.log(category.toLowerCase());
-        axios.get(`http://localhost:5000/search/${category}`)
+        // console.log(category.toLowerCase());
+        axios.get(`https://hirely-server.vercel.app/search/${category}`)
             .then(res => setAllJobs(res.data))
     }
     // console.log(allJobs);

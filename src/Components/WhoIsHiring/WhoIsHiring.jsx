@@ -3,10 +3,10 @@ const WhoIsHiring = () => {
         <div className="py-14">
             <div className="max-w-screen-xl mx-auto px-4 md:px-8">
                 <div className="max-w-xl mx-auto text-center">
-                    <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
+                    <h3 className="text-3xl font-semibold sm:text-4xl">
                         Who Is Hiring?
                     </h3>
-                    <p className="text-gray-600 mt-3">
+                    <p className=" mt-3">
                     Explore exciting opportunities with us! Join our team and be part of a dynamic and innovative company. Whether you&apos;re an experienced professional or just starting your career, we have positions for various skill sets. Discover your perfect fit and contribute to a collaborative work environment that encourages growth and creativity. Join us in shaping a brighter future!
                     </p>
                 </div>

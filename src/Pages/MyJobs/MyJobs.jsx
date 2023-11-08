@@ -16,7 +16,7 @@ const MyJobs = () => {
 
     const { user } = useContext(AuthContext)
     useEffect(() => {
-        axios.get('http://localhost:5000/job')
+        axios.get('https://hirely-server.vercel.app/job')
             .then(res => setJobs(res.data))
     }, [])
 
@@ -31,9 +31,9 @@ const MyJobs = () => {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    axios.delete(`http://localhost:5000/job/${id}`)
+                    axios.delete(`https://hirely-server.vercel.app/job/${id}`)
                         .then(() => {
-                            axios.get('http://localhost:5000/job')
+                            axios.get('https://hirely-server.vercel.app/job')
                                 .then(res => setJobs(res.data))
                                 .catch((err) => console.log(err))
                             swal("Your Job has been deleted!", {

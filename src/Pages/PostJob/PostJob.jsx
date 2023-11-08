@@ -33,7 +33,7 @@ const PostJob = () => {
         const jobData = { bannerPhoto, jobTitle, userName, userEmail, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
         // console.log(jobData);
         // send job data to server
-        fetch('http://localhost:5000/job', {
+        fetch('https://hirely-server.vercel.app/job', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

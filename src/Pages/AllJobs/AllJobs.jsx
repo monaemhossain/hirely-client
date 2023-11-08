@@ -10,7 +10,7 @@ const AllJobs = () => {
     const [searchInput, setSearchInput] = useState('')
     const [jobs, setJobs] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:5000/job')
+        axios.get('https://hirely-server.vercel.app/job')
             .then(res => setJobs(res.data))
 
     }, [])
@@ -18,10 +18,10 @@ const AllJobs = () => {
     const handleSearch = (e) => {
         setSearchInput(e.target.value)
         try {
-            axios.get(`http://localhost:5000/search/${e.target.value}`)
+            axios.get(`https://hirely-server.vercel.app/search/${e.target.value}`)
                 .then(res => setJobs(res.data))
                 .catch(() => {
-                    axios.get('http://localhost:5000/job')
+                    axios.get('https://hirely-server.vercel.app/job')
                         .then(res => setJobs(res.data))
                 })
         } catch (error) {
@@ -55,7 +55,7 @@ const AllJobs = () => {
                     </div>
                 </form>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
                 {
                     jobs.map((item, idx) => (<JobCard key={idx} data={item}></JobCard>))
                 }

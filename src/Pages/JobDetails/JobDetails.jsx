@@ -30,7 +30,7 @@ const JobDetails = () => {
             // console.log(applicationDetails);
 
             // send job data to server
-            fetch('http://localhost:5000/application', {
+            fetch('https://hirely-server.vercel.app/application', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

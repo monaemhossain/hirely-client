@@ -33,7 +33,7 @@ const FAQs = () => {
     return (
         <section className="leading-relaxed max-w-screen-xl mt-12 mx-auto px-4 md:px-8">
             <div className="space-y-3 text-center">
-                <h1 className="text-3xl text-gray-800 font-semibold">
+                <h1 className="text-3xl font-semibold">
                     Frequently Asked Questions
                 </h1>
                 <p className="text-gray-600 max-w-lg mx-auto text-lg">
@@ -47,7 +47,7 @@ const FAQs = () => {
                             className="space-y-3 mt-5"
                             key={idx}
                         >
-                            <h4 className="text-xl text-gray-700 font-medium">
+                            <h4 className="text-xl font-medium">
                                 {item.q}
                             </h4>
                             <p className="text-gray-500">

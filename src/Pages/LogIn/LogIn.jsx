@@ -23,7 +23,7 @@ const LogIn = () => {
                 const  loggedInUser = result.user;
                 console.log(loggedInUser);
                 const user = {email}
-                axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
+                axios.post('https://hirely-server.vercel.app/jwt', user, {withCredentials: true})
                 .then(res => {
                     console.log(res.data);
                 })
@@ -49,7 +49,7 @@ const LogIn = () => {
     const handleGoogleLogIn = () => {
         logInWithGoogle()
             .then(() => {
-                // axios.post('http://localhost:5000/jwt')
+                // axios.post('https://hirely-server.vercel.app/jwt')
                 // .then(res => {
                 //     console.log(res);
                 // })
