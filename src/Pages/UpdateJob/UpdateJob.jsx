@@ -63,7 +63,7 @@ const UpdateJob = () => {
                 <div className="text-center">
 
                     <div className="mt-5 space-y-2">
-                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Post your job</h3>
+                        <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">Update job information</h3>
                     </div>
                 </div>
                 <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
@@ -117,7 +117,7 @@ const UpdateJob = () => {
                                     Job type
                                 </label>
                                 <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40' required defaultValue={jobType}>
-                                    <option value="0">Select Job Type</option>
+                                    <option value="" defaultValue disabled>Select Job Type</option>
                                     <option>On Site</option>
                                     <option >Remote</option>
                                     <option>Part-Time</option>
@@ -181,6 +181,7 @@ const UpdateJob = () => {
                                 Job Description
                             </label>
                             <textarea
+                            rows='7'
                                 defaultValue={jobDescription}
                                 id="jobDescription"
                                 type="text"

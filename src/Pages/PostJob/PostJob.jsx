@@ -114,7 +114,7 @@ const PostJob = () => {
                                     Job type
                                 </label>
                                 <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40' required>
-                                    <option value="0">Select Job Type</option>
+                                    <option value="" defaultValue disabled>Select Job Type</option>
                                     <option>On Site</option>
                                     <option >Remote</option>
                                     <option>Part-Time</option>

@@ -55,10 +55,6 @@ const JobDetails = () => {
         navigate(`/update/${_id}`)
     }
 
-    const handleDeleteJob = () => {
-
-    }
-
     return (
         <section className="max-w-screen-xl mx-auto py-24">
 
@@ -81,14 +77,14 @@ const JobDetails = () => {
                     <div className="card-actions lg:justify-end justify-center items-center max-sm:grid grid-flow-row gap-3">
                         <p className="justify-start"><span className="font-bold text-theme-color-4">Number of Applicants:</span> <span className="font-bold">{applicantsNumber}</span></p>
                         {
-                            applicantEmail ? <button className="btn" disabled="disabled">Already applied</button>: <>
+                            applicantEmail ? <button className="btn" disabled="disabled">Already applied</button> : <>
                                 {
                                     applicantEmail ? '' : user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
                                 }
                                 {
-                                    user.email == userEmail ? <button onClick={handleDeleteJob} className="btn px-5 btn-error text-white hover:bg-red-500 transition-all">Delete</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                                    user.email == userEmail ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
                                 }
-                            </> 
+                            </>
                         }
                     </div>
                 </div>
@@ -128,14 +124,14 @@ const JobDetails = () => {
                             className="w-full px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-2 shadow-sm rounded-lg"
                             required
                         />
-                        <div className="modal-action grid grid-cols-2">
-                            <button type="submit" className="btn bg-theme-color-2 hover:bg-theme-color-1 hover:text-white">Submit Application</button>
+                            <button type="submit" className="btn bg-theme-color-2 hover:bg-theme-color-1 hover:text-white mt-5">Submit Application</button>
+                    </form>
+                        <div className="modal-action grid grid-cols-1">
                             <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
                                 <button className="btn w-full btn-error text-white hover:bg-red-500 transition-all">Close</button>
                             </form>
                         </div>
-                    </form>
 
 
 
