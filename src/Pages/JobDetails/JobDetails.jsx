@@ -2,6 +2,7 @@ import { useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { usePDF } from "react-to-pdf";
 
 const JobDetails = () => {
     const data = useLoaderData();
@@ -61,9 +62,9 @@ const JobDetails = () => {
     const handleUpdateJob = () => {
         navigate(`/update/${_id}`)
     }
-
+    const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
     return (
-        <section className="max-w-screen-xl mx-auto py-24">
+        <section className="max-w-screen-xl mx-auto py-24"  ref={targetRef}>
 
             <div className="card lg:card-side bg-base-100 shadow-xl lg:grid grid-cols-2">
                 <figure><img src={`${validateUser ? bannerPhoto : 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg'}`} alt={`${jobTitle} banner image`} className="object-cover h-full" /></figure>
@@ -86,12 +87,12 @@ const JobDetails = () => {
                     <div className="card-actions lg:justify-end justify-center items-center max-sm:grid grid-flow-row gap-3">
                         <p className="justify-start"><span className="font-bold text-theme-color-4">Number of Applicants:</span> <span className="font-bold">{applicantsNumber}</span></p>
                         {
-                            applicantEmail ? <button className="btn" disabled="disabled">Already applied</button> : <>
+                            applicantEmail ? <button className="btn"  onClick={() => toPDF()}>Download Application</button> : <>
                                 {
                                     applicantEmail ? '' : user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
                                 }
                                 {
-                                    user.email == userEmail || jobDeadLine < today ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                                    user.email == userEmail || jobDeadLine > today ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
                                 }
                             </>
                         }

@@ -36,7 +36,7 @@ const JobTabs = () => {
         axios.get(`http://localhost:5000/search/${category}`)
             .then(res => setAllJobs(res.data))
     }
-    console.log(allJobs);
+    // console.log(allJobs);
     return (
         <Tabs className="w-full">
             <TabList>

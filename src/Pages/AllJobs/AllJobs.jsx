@@ -29,7 +29,7 @@ const AllJobs = () => {
         }
     }
 
-    console.log(searchInput);
+    // console.log(searchInput);
 
     return (
         <div className="my-14 max-w-screen-xl mx-auto px-4 md:px-8">

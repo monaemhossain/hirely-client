@@ -3,6 +3,7 @@ import Logo from "../../Components/logo/logo";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
+import axios from "axios";
 
 const LogIn = () => {
     useEffect(() => {
@@ -18,7 +19,15 @@ const LogIn = () => {
         const password = e.target.password.value;
 
         logIn(email, password)
-            .then(() => {
+            .then((result) => {
+                const  loggedInUser = result.user;
+                console.log(loggedInUser);
+                const user = {email}
+                axios.post('http://localhost:5000/jwt', user, {withCredentials: true})
+                .then(res => {
+                    console.log(res.data);
+                })
+
                 toast.success("Login success")
                 navigate(location?.state ? location.state : '/');
             })
@@ -40,6 +49,10 @@ const LogIn = () => {
     const handleGoogleLogIn = () => {
         logInWithGoogle()
             .then(() => {
+                // axios.post('http://localhost:5000/jwt')
+                // .then(res => {
+                //     console.log(res);
+                // })
                 toast.success('Logged in Successfully!')
                 navigate(location?.state ? location.state : '/');
             })
