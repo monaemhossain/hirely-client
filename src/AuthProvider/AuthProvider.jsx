@@ -39,10 +39,8 @@ const AuthProvider = ({children}) => {
             setUser(isUser)
             if (isUser) {
                 setLoader(false)
-                console.log("user logged in");
 
             } else {
-                console.log("user logged out");
                 setLoader(false)
             }
         });

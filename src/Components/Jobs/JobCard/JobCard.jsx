@@ -1,24 +1,36 @@
 import PropTypes from 'prop-types'
+import { useContext } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../../../AuthProvider/AuthProvider'
 const JobCard = ({ data }) => {
     const { _id, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
+    const {user} = useContext(AuthContext)
     // console.log(data);
     const navigate = useNavigate()
     const location = useLocation()
     const handleJobDetails = () => {
+        if(!user){
+            toast.error("You have to log in first to view details.")
+            setTimeout(() => { 
+                navigate(`/details/${type}/${id}`);
+            }, 3000);
+        }
+        
+        
         let type = 'job'
         if(location.pathname=="/applied-jobs"){
             type = 'application';
-            console.log(true);
         }
         const id = _id; 
-    
         navigate(`/details/${type}/${id}`);
-        console.log(location);
+        
+        
       }
 
     return (
         <section >
+            <Toaster />
             <div>
                 <div className="p-5 bg-white rounded-md shadow-sm border">
 
@@ -71,6 +83,7 @@ const JobCard = ({ data }) => {
                         </div>
                     </div>
 
+            
                 </div>
 
             </div>

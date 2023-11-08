@@ -16,12 +16,12 @@ const AppliedJobs = () => {
         axios.get('http://localhost:5000/application')
             .then(res => setAppliedJob(res.data))
     }, [])
-    const myApplications = appliedJob.filter(job => job.userEmail.toLowerCase() == user.email.toLowerCase())
+    const myApplications = appliedJob.filter(job => job.applicantEmail == user.email)
     return (
         <div className="my-14 max-w-screen-xl mx-auto px-4 md:px-8">
             <div className="my-8">
                 <h1 className="text-gray-800 text-3xl font-semibold">
-                    Your posted jobs
+                    Your applied jobs
                 </h1>
             </div>
             <div className="grid grid-cols-2 gap-4">

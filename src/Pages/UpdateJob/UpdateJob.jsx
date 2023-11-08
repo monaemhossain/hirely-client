@@ -2,20 +2,23 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import './PostJob.css';
+
 import toast, { Toaster } from "react-hot-toast";
+import { useLoaderData } from "react-router-dom";
 
-const PostJob = () => {
+const UpdateJob = () => {
     useEffect(() => {
-        document.title = 'Hirely | Post Job';
+        document.title = 'Hirely | Update Job';
     }, []);
-
+    const data = useLoaderData();
     const { user } = useContext(AuthContext);
-    
+
+    const { _id, bannerPhoto, jobTitle, userName, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, } = data
+    // console.log(data);
     const [postDate, setPostDate] = useState(new Date())
     const [startDate, setStartDate] = useState(new Date())
 
-    const handlePostJob = (e) => {
+    const handleUpdateJob = (e) => {
         e.preventDefault();
         const bannerPhoto = e.target.bannerPhoto.value
         const jobTitle = e.target.jobTitle.value
@@ -28,26 +31,25 @@ const PostJob = () => {
         const jobDescription = e.target.jobDescription.value
         const priceRageMin = e.target.priceRageMin.value
         const priceRageMax = e.target.priceRageMax.value
-        const applicantsNumber = 0;
 
-        const jobData = { bannerPhoto, jobTitle, userName, userEmail, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber }
+        const updatedJobData = { bannerPhoto, jobTitle, userName, userEmail, jobType, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax }
         // console.log(jobData);
         // send job data to server
-        fetch('http://localhost:5000/job', {
-            method: 'POST',
+        fetch(`http://localhost:5000/job/${_id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
-            body: JSON.stringify(jobData)
+            body: JSON.stringify(updatedJobData)
         })
             .then(res => res.json())
             .then(() => {
-                toast.success(`${jobTitle} Successfully Posted`)
+                toast.success(`${jobTitle} Successfully updated`)
             })
             .catch((err)=>{
                 toast.error(err)
             })
-        document.postJobForm.reset();
+        // document.postJobForm.reset();
 
 
     }
@@ -66,7 +68,7 @@ const PostJob = () => {
                 </div>
                 <div className="bg-white shadow p-4 py-6 sm:p-6 sm:rounded-lg">
                     <form
-                        onSubmit={handlePostJob}
+                        onSubmit={handleUpdateJob}
                         className="space-y-5"
                         name="postJobForm"
                     >
@@ -75,6 +77,7 @@ const PostJob = () => {
                                 Banner photo url
                             </label>
                             <input
+                            defaultValue={bannerPhoto}
                                 placeholder="https://example.com/banner.jpg"
                                 id="bannerPhoto"
                                 type="text"
@@ -87,6 +90,7 @@ const PostJob = () => {
                                 Job Title
                             </label>
                             <input
+                            defaultValue={jobTitle}
                                 id="jobTitle"
                                 type="text"
                                 placeholder="Marketing Coordinator, Sales Manager"
@@ -99,12 +103,11 @@ const PostJob = () => {
                                 User Name
                             </label>
                             <input
+                            defaultValue={userName}
                                 id="userName"
                                 type="text"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"
-                                defaultValue={user.displayName}
-
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg"                               
                             />
                         </div>
 
@@ -113,7 +116,7 @@ const PostJob = () => {
                                 <label className="font-medium " htmlFor="jobType">
                                     Job type
                                 </label>
-                                <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40' required>
+                                <select id="jobType" className="h-[42px] mt-2 px-2  w-full  text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg" height='40' required defaultValue={jobType}>
                                     <option value="0">Select Job Type</option>
                                     <option>On Site</option>
                                     <option >Remote</option>
@@ -126,6 +129,7 @@ const PostJob = () => {
                                     Job Category
                                 </label>
                                 <input
+                                defaultValue={jobCategory}
                                     id="jobCategory"
                                     type="text"
                                     required
@@ -141,6 +145,7 @@ const PostJob = () => {
                             </label>
                             <div className="grid grid-cols-2 gap-2.5">
                                 <input
+                                defaultValue={priceRageMin}
                                     id="priceRageMin"
                                     type="number"
                                     placeholder="$50"
@@ -148,6 +153,7 @@ const PostJob = () => {
                                     className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg appearance-none"
                                 />
                                 <input
+                                defaultValue={priceRageMax}
                                     id="priceRageMax"
                                     type="number"
                                     placeholder="$200"
@@ -161,13 +167,13 @@ const PostJob = () => {
                                 <label className="font-medium" htmlFor="postingDate">
                                     Posting Date
                                 </label>
-                                <DatePicker id="postingDate" selected={postDate} onChange={(date) => setPostDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' disabled />
+                                <DatePicker defaultValue={postingDate} id="postingDate" selected={postDate} onChange={(date) => setPostDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' disabled />
                             </div>
                             <div>
                                 <label className="font-medium" htmlFor="deadLine">
                                     Deadline
                                 </label>
-                                <DatePicker id='deadLine' selected={startDate} onChange={(date) => setStartDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' required/>
+                                <DatePicker defaultValue={deadLine} id='deadLine' selected={startDate} onChange={(date) => setStartDate(date)} className='w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-theme-color-4 shadow-sm rounded-lg' required/>
                             </div>
                         </div>
                         <div>
@@ -175,6 +181,7 @@ const PostJob = () => {
                                 Job Description
                             </label>
                             <textarea
+                                defaultValue={jobDescription}
                                 id="jobDescription"
                                 type="text"
                                 placeholder="Please provide a brief description of your qualifications and experience related to this position"
@@ -198,4 +205,4 @@ const PostJob = () => {
 
 }
 
-export default PostJob;
+export default UpdateJob;

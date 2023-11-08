@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 
 const JobDetails = () => {
     const data = useLoaderData();
     const { user } = useContext(AuthContext)
-    console.log(user);
-    const { bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType, userEmail } = data
+    // console.log(data);
+    const { _id, bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType, userEmail, applicantEmail } = data
     const isValidUrl = (string) => {
         try {
             new URL(string);
@@ -20,13 +20,13 @@ const JobDetails = () => {
 
     const handleSubmitApplication = (e) => {
         e.preventDefault()
-        const userName = e.target.userName.value
-        const userEmail = e.target.userEmail.value
-        const userResume = e.target.resumeLink.value
+        const applicantName = e.target.userName.value
+        const applicantEmail = e.target.userEmail.value
+        const applicantResume = e.target.resumeLink.value
         try {
-            new URL(userResume);
-            const applicationDetails = { userName, userEmail, userResume, bannerPhoto, jobTitle, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType }
-            console.log(applicationDetails);
+            new URL(applicantResume);
+            const applicationDetails = { applicantName, applicantEmail, applicantResume, bannerPhoto, jobTitle, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType }
+            // console.log(applicationDetails);
 
             // send job data to server
             fetch('http://localhost:5000/application', {
@@ -50,13 +50,13 @@ const JobDetails = () => {
     }
 
 
-
+    const navigate = useNavigate()
     const handleUpdateJob = () => {
-
+        navigate(`/update/${_id}`)
     }
-    const disabledBtn = () => {
-        toast.error("Your can't apply for your own job")
-        console.log("cliced");
+
+    const handleDeleteJob = () => {
+
     }
 
     return (
@@ -81,10 +81,14 @@ const JobDetails = () => {
                     <div className="card-actions lg:justify-end justify-center items-center max-sm:grid grid-flow-row gap-3">
                         <p className="justify-start"><span className="font-bold text-theme-color-4">Number of Applicants:</span> <span className="font-bold">{applicantsNumber}</span></p>
                         {
-                            user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
-                        }
-                        {
-                            user.email == userEmail ? <button onClick={disabledBtn} className="btn bg-gray-200 cursor-not-allowed  text-theme-color-5 transition-all px-12">Apply</button>:<button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                            applicantEmail ? <button className="btn" disabled="disabled">Already applied</button>: <>
+                                {
+                                    applicantEmail ? '' : user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
+                                }
+                                {
+                                    user.email == userEmail ? <button onClick={handleDeleteJob} className="btn px-5 btn-error text-white hover:bg-red-500 transition-all">Delete</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                                }
+                            </> 
                         }
                     </div>
                 </div>
@@ -93,7 +97,7 @@ const JobDetails = () => {
 
             <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Hello!</h3>
+                    <h3 className="font-bold text-lg">Hello! {user.displayName}</h3>
                     <p className="py-4">Press ESC key or click the button below to close</p>
                     <form onSubmit={handleSubmitApplication} className="grid gap-2">
                         <label htmlFor="userName">Applicant name</label>

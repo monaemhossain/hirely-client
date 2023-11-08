@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Toaster } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
@@ -28,6 +29,7 @@ const ErrorPage = () => {
                     </div>
                 </div>
             </div>
+            <Toaster />
         </main>
     )
 }
