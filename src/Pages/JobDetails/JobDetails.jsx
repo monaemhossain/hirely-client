@@ -62,6 +62,8 @@ const JobDetails = () => {
     const handleUpdateJob = () => {
         navigate(`/update/${_id}`)
     }
+
+    console.log(user.email == userEmail || jobDeadLine < today );
     const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
     return (
         <section className="max-w-screen-xl mx-auto py-24"  ref={targetRef}>
