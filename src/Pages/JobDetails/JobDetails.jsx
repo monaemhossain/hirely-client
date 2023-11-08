@@ -7,7 +7,7 @@ const JobDetails = () => {
     const data = useLoaderData();
     const { user } = useContext(AuthContext)
     // console.log(data);
-    const { _id, bannerPhoto, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType, userEmail, applicantEmail } = data
+    const { _id, bannerPhoto, jobTitle, userName,applicantName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType, userEmail, applicantEmail } = data
     const isValidUrl = (string) => {
         try {
             new URL(string);
@@ -61,7 +61,9 @@ const JobDetails = () => {
             <div className="card lg:card-side bg-base-100 shadow-xl lg:grid grid-cols-2">
                 <figure><img src={`${validateUser ? bannerPhoto : 'https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg'}`} alt={`${jobTitle} banner image`} className="object-cover h-full" /></figure>
                 <div className="card-body">
-                    <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Job posted by:</span> {userName}</p>
+                    {
+                        userName?<p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Job posted by:</span> {userName}</p>:<p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Applicant name:</span> {applicantName}</p>
+                    }
                     <div className="grid gap-2">
                         <p className="flex justify-start gap-2"><span className="font-bold text-theme-color-4">Posted date:</span> {postingDate}</p>
                         <p className="flex gap-2"><span className="font-bold text-theme-color-4">Application deadline:</span> {deadLine}</p>

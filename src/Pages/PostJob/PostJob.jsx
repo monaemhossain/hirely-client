@@ -175,6 +175,7 @@ const PostJob = () => {
                                 Job Description
                             </label>
                             <textarea
+                                rows="7"
                                 id="jobDescription"
                                 type="text"
                                 placeholder="Please provide a brief description of your qualifications and experience related to this position"

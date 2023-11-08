@@ -45,7 +45,7 @@ const JobCard = ({ data }) => {
                                     {jobTitle}
                                 </h3>
                                 <p className="text-gray-500 mt-2 pr-2">
-                                    {jobDescription.slice(0, 50)}...
+                                    {jobDescription?.slice(0, 50)}...
                                 </p>
                             </div>
                             <div className="mt-5 space-y-4 text-sm sm:mt-0 sm:space-y-2">
