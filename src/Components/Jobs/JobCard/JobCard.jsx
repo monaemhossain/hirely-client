@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../../AuthProvider/AuthProvider'
 const JobCard = ({ data }) => {
-    const { _id, jobTitle, userName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
+    const { _id, jobTitle, userName, applicantName, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber } = data
     const {user} = useContext(AuthContext)
     // console.log(data);
     const navigate = useNavigate()
@@ -38,7 +38,7 @@ const JobCard = ({ data }) => {
                         <div className="justify-between sm:flex items-center">
                             <div className="flex-1">
                                 <div className='flex justify-between'>
-                                    <p className='text-sm text-theme-color-1'>Posted by: {userName}</p>
+                                    {userName?<p className='text-sm text-theme-color-1'>Posted by: {userName}</p>:<p className='text-sm text-theme-color-1'>Applied by: {applicantName}</p>}
 
                                 </div>
                                 <h3 className="text-xl font-medium text-theme-color-5">

@@ -20,24 +20,24 @@ const LogIn = () => {
 
         logIn(email, password)
             .then((result) => {
-                const  loggedInUser = result.user;
+                const loggedInUser = result.user;
                 console.log(loggedInUser);
-                const user = {email}
-                axios.post('https://hirely-server.vercel.app/jwt', user, {withCredentials: true})
-                .then(res => {
-                    console.log(res.data);
-                })
+                const user = { email }
+                axios.post('https://hirely-server.vercel.app/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data);
+                    })
 
                 toast.success("Login success")
                 navigate(location?.state ? location.state : '/');
             })
             .catch((err) => {
                 console.log(err);
-                if(err.code == "auth/network-request-failed"){
+                if (err.code == "auth/network-request-failed") {
                     toast.error("Network Error. Check you internet connection")
                     return;
                 }
-                if(err.code == "auth/invalid-login-credentials"){
+                if (err.code == "auth/invalid-login-credentials") {
                     toast.error("Invalid login credentials try login with Google instead")
                     return;
                 }
@@ -48,16 +48,16 @@ const LogIn = () => {
 
     const handleGoogleLogIn = () => {
         logInWithGoogle()
-            .then(() => {
-                // axios.post('https://hirely-server.vercel.app/jwt')
-                // .then(res => {
-                //     console.log(res);
-                // })
+            .then((user) => {
+                axios.post('https://hirely-server.vercel.app/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data);
+                    })
                 toast.success('Logged in Successfully!')
                 navigate(location?.state ? location.state : '/');
             })
             .catch((err) => {
-                if(err.code == "auth/network-request-failed"){
+                if (err.code == "auth/network-request-failed") {
                     toast.error("Network Error. Check you internet connection")
                     return;
                 }

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom"
 import PropTypes from 'prop-types';
 import Logo from "../../logo/logo";
 import { AuthContext } from "../../../AuthProvider/AuthProvider";
+import axios from "axios";
 
 // Profile Dropdown
 const ProfileDropDown = (props) => {
@@ -25,7 +26,14 @@ const ProfileDropDown = (props) => {
 
 
   const handleLogOut = () => {
-    logOut();
+    logOut()
+      .then((user) => {
+        axios.post('https://hirely-server.vercel.app/jwt', user, { withCredentials: true })
+          .then(res => {
+            console.log(res.data);
+          })
+
+      });
   }
 
   useEffect(() => {

@@ -27,5 +27,5 @@ Access Hirely on the go! The platform is optimized for mobile devices, ensuring 
 ## Getting Started
 
 1. [Github repository](https://github.com/Porgramming-Hero-web-course/b8a11-client-side-monaemhossain)
-1. [Site link](https://monaem.com)
+1. [Site link](https://hire-ly.web.app/)
 

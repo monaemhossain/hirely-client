@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
 import { usePDF } from "react-to-pdf";
+import axios from "axios";
 
 const JobDetails = () => {
     const data = useLoaderData();
@@ -19,14 +20,15 @@ const JobDetails = () => {
     }
     const validateUser = isValidUrl(bannerPhoto)
 
-    const handleSubmitApplication = (e) => {
+    const handleSubmitApplication = (e, id) => {
         e.preventDefault()
         const applicantName = e.target.userName.value
         const applicantEmail = e.target.userEmail.value
         const applicantResume = e.target.resumeLink.value
+        const applicationID = _id;
         try {
             new URL(applicantResume);
-            const applicationDetails = { applicantName, applicantEmail, applicantResume, bannerPhoto, jobTitle, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType }
+            const applicationDetails = { applicationID, applicantName, applicantEmail, applicantResume, bannerPhoto, jobTitle, jobCategory, postingDate, deadLine, jobDescription, priceRageMin, priceRageMax, applicantsNumber, jobType }
             // console.log(applicationDetails);
 
             // send job data to server
@@ -39,6 +41,13 @@ const JobDetails = () => {
             })
                 .then(res => res.json())
                 .then(() => {
+                    axios.put(`https://hirely-server.vercel.app/job/update-applicant/${id}`)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
                     toast.success(`Your application successfully sent`)
                 })
                 .catch((err) => {
@@ -49,11 +58,22 @@ const JobDetails = () => {
             console.log(err);
         }
     }
+    const [applications, setApplications] = useState([])
+    // validate job if already applied
+    useEffect(()=>{
+        axios.get('https://hirely-server.vercel.app/application', {withCredentials: true})
+        .then(res=>{
+            setApplications(res.data)
+        })
+    }, [])
+    var getAppliedData = applications.find(item => {
+        return item.jobTitle === jobTitle
+      })
     // compare job dead line
-    let dateObj = new Date();
-    let year = dateObj.getFullYear();
-    let month = dateObj.getMonth() + 1;
-    let day = dateObj.getDate();
+    const dateObj = new Date();
+    const year = dateObj.getFullYear();
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
     const today = year + "/" + month + "/" + day;
 
     const jobDeadLine = deadLine.replace(/-/g, '/')
@@ -62,8 +82,12 @@ const JobDetails = () => {
     const handleUpdateJob = () => {
         navigate(`/update/${_id}`)
     }
+    const intDeadLine = new Date(jobDeadLine).getTime()
+    const intToday = new Date(today).getTime()
 
-    console.log(user.email == userEmail || jobDeadLine < today );
+    
+    // console.log(intDeadLine < intToday );
+
     const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
     return (
         <section className="max-w-screen-xl mx-auto py-24"  ref={targetRef}>
@@ -94,7 +118,7 @@ const JobDetails = () => {
                                     applicantEmail ? '' : user.email == userEmail ? <button onClick={handleUpdateJob} className='btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white'>Update job details</button> : ''
                                 }
                                 {
-                                    user.email == userEmail || jobDeadLine > today ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
+                                    user.email == userEmail || intDeadLine  < intToday || getAppliedData ? <button className="btn px-5 text-white hover:bg-red-500 transition-all" disabled="disabled">Apply</button> : <button onClick={() => document.getElementById('my_modal_1').showModal()} className="btn bg-white border border-theme-color-5 text-theme-color-5 hover:bg-theme-color-1 transition-all hover:text-white px-12">Apply</button>
                                 }
                             </>
                         }
@@ -107,7 +131,7 @@ const JobDetails = () => {
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Hello! {user.displayName}</h3>
                     <p className="py-4">Press ESC key or click the button below to close</p>
-                    <form onSubmit={handleSubmitApplication} className="grid gap-2">
+                    <form onSubmit={(e) => handleSubmitApplication(e, _id)} className="grid gap-2">
                         <label htmlFor="userName">Applicant name</label>
                         <input
                             id="userName"
