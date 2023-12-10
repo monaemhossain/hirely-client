@@ -10,8 +10,8 @@ Easily search for jobs based on keywords, location, industry, and more. Filter r
 ### 2. Profile Customization
 Create a detailed profile showcasing your skills, experience, and accomplishments. Stand out to potential employers with an attractive and informative profile.
 
-### 3. Real-time Notifications
-Receive instant updates on application status, new job postings, and messages from employers. Stay connected and informed throughout your job search.
+### 3. "Cutting-edge Technology
+- Built with modern technologies, including React.js, MongoDB, and Express.js, ensuring a scalable and responsive platform for a seamless hiring experience.
 
 ### 4. Employer Features
 - Post and manage job listings with ease
